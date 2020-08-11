@@ -2,58 +2,48 @@ import React, { Component } from 'react';
 import Weather from './components/Weather/Weather';
 import classes from './App.module.css';
 import Details from './components/Details/Details';
-import axios from 'axios';
+
+import { connect } from 'react-redux';
+import * as actions from './containers/store/Action/Actions';
 
 
 class App extends Component {
-  state = {
-    city: '',
-    forecast: null,
-    clicked: false
-  }
-
-  onEnterName = (event) => {
-    let cityName = this.state;
-    cityName.city = event.target.value;
-    this.setState({
-      state: cityName,
-      clicked: false
-    })
-  }
-
-  onClickSubmit = () => {
-    axios.get(`http://localhost:8080/get_weather_details?city=${this.state.city}`)
-    .then (response =>  {
-      this.setState({
-        forecast: response.data,
-        clicked: true
-      })
-    }).catch (error => {
-      this.setState({
-        forecast: null,
-        clicked: true
-      })
-    })
-  }
-
   
 
   render () {
     let weatherDetails = null;
 
-    if((this.state.forecast && this.state.clicked)) {
-      weatherDetails = <Details details={this.state.forecast} />
-    } else if ((this.state.forecast === null && this.state.clicked)) {
-      weatherDetails = <div className={classes.error}> {this.state.city} city doesnot exist...!</div>
+    if((this.props.forecast && this.props.clicked)) {
+      weatherDetails = <Details details={this.props.forecast} />
+    } else if ((this.props.forecast === null && this.props.clicked)) {
+      weatherDetails = <div className={classes.error}> 
+        {this.props.error.toString()}...!</div>
     }
      
     return (
       <div className={classes.App}>
-        <Weather enterName={this.onEnterName} submit={this.onClickSubmit} city={this.state.city}/>
+        <Weather enterName={this.props.onEnterCity} 
+          submit={this.props.getWeatherDetails.bind(null,this.props.city)} city={this.props.city}/>
         {weatherDetails}
       </div>
     )
   }
 }
 
-export default App;
+const connectStateToProps = state => {
+  return {
+    city: state.city,
+    forecast: state.forecast,
+    clicked: state.clicked,
+    error: state.error
+  }
+}
+
+const connectDispatchToProps = dispatch => {
+  return {
+    getWeatherDetails: (city) => dispatch(actions.getForecast(city)),
+    onEnterCity: (event) => dispatch(actions.enterCity(event))
+  }
+}
+
+export default connect(connectStateToProps,connectDispatchToProps)(App);
