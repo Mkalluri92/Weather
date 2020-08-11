@@ -1,19 +1,23 @@
 import React from 'react';
+import classes from './Details.module.css';
 
 const Details = (props) => {
-    let date = new Date();
-    let day = date.getDate();
-    let month = date.getMonth();
-    let year = date.getUTCFullYear();
-    let hours = date.getHours(); // => 9
-    let minutes = date.getMinutes(); // =>  30
-    let seconds = date.getSeconds();
+  
+    console.log(props);
+    let weatherDetails = props.details.map((current,index) => {
+        return (
+            <span key={index}>
+                <div>Date: <b>{current.Date}</b></div>
+                <div>Time: <b>{current.time}</b></div>
+                <div>Feels: <b>{current.feels}</b></div>
+                <div>Temperature: <b>{current.temprature}</b></div>
+            </span>
+        )
+    })
     return (
         <div>
-            <div>City Name: <b>{props.city}</b></div>
-            <div>Date: <b>{day}-{month+1}-{year}</b></div>
-            <div>Time: <b>{hours}:{minutes}:{seconds}</b></div>
-            <div>Temperature: <b>{props.temperature}</b></div>
+            <div>City Name: <b>{props.name}</b></div>
+            {weatherDetails}
         </div>
     )
 }
