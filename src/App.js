@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import Weather from './components/Weather/Weather';
-import './App.css';
+import classes from './App.module.css';
+import Details from './components/Details/Details';
 
 class App extends Component {
   state = {
     city: '',
+    temperature: '30c',
     clicked: false
   }
 
@@ -25,10 +27,13 @@ class App extends Component {
   }
 
   render () {
+    let weatherDetails = this.state.clicked? <Details 
+      city={this.state.city} temperature={this.state.temperature}/>: null
     return (
-      <React.Fragment>
+      <div className={classes.App}>
         <Weather enterName={this.onEnterName} submit={this.onClickSubmit} city={this.state.city}/>
-      </React.Fragment>
+        {weatherDetails}
+      </div>
     )
   }
 }
