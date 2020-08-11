@@ -237,7 +237,8 @@ class App extends Component {
     let cityName = this.state;
     cityName.city = event.target.value;
     this.setState({
-      state: cityName
+      state: cityName,
+      clicked: false
     })
   }
 
@@ -262,6 +263,10 @@ class App extends Component {
               }
           }
       }
+    }
+
+    if((weatherDetails === null && this.state.clicked)) {
+      weatherDetails = <div className={classes.error}> {this.state.city} city doesnot exist...!</div>
     }
      
     return (

@@ -6,19 +6,21 @@ const Details = (props) => {
     console.log(props);
     let weatherDetails = props.details.map((current,index) => {
         return (
-            <span key={index}>
-                <div>Date: <b>{current.Date}</b></div>
-                <div>Time: <b>{current.time}</b></div>
-                <div>Feels: <b>{current.feels}</b></div>
-                <div>Temperature: <b>{current.temprature}</b></div>
-            </span>
+            <div key={index} className={classes.weatherDetails}>
+                <span>Date: <b>{current.Date}</b></span>
+                <span>Time: <b>{current.Time}</b></span>
+                <span>Feels: <b>{current.feels}</b></span>
+                <span>Temperature: <b>{current.temprature}</b></span>
+            </div>
         )
     })
     return (
-        <div>
+        <React.Fragment>
             <div>City Name: <b>{props.name}</b></div>
-            {weatherDetails}
-        </div>
+            <div className={classes.container}>
+                {weatherDetails}
+            </div>
+        </React.Fragment>
     )
 }
 

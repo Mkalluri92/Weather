@@ -4,3 +4,17 @@ b {
     margin: 10px;
     font-family: 'Noto Sans', sans-serif;
 }
+
+.container {
+    display: flex
+}
+
+span {
+    display: inline-block;
+}
+
+.weatherDetails {
+    margin: 5px;
+    padding: 20px;
+    border: 1px solid #eee;
+}
